@@ -10,3 +10,20 @@
     7. commentek
     8. pontosvessző
     9. behúzás
+
+2. Adat típusok
+    1. number
+    2. string
+    3. boolean
+    4. érték adás
+    5. név választás
+    6. tömb
+    7. objektum
+    8. `const`, `let`, (`var`)
+
+3. Termékek kiíratása
+    1. objektum létrehozás
+    2. tömb bejárása `foreach`
+    3. string összefűzés
+    4. változók kiíratása stringbe
+    5. elem HTML tartalmának felülírása és kiegészítése

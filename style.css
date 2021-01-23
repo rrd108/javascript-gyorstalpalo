@@ -66,3 +66,43 @@ nav a {
 main h1 {
   margin: 0 1rem;
 }
+
+#products {
+  text-align: center;
+}
+
+#products h2 {
+  background: #D8315B;
+  color: #fff;
+  padding: .3rem 1rem;
+  border-bottom: .3rem solid #fff;
+}
+
+#products p {
+  font-variant: small-caps;
+  font-size: 1.5rem;
+}
+
+#products img {
+  width: 75%;
+}
+
+#products a {
+  background:  #197278; /*#7C6A0A;*/
+  padding: .3rem 1rem;
+  color: #fff;
+  text-decoration: none;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+@media (min-width: 640px) {
+  #products {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  #products div {
+    margin: 0 .5rem;
+    width: 30%;
+  }
+}

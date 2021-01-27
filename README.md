@@ -26,4 +26,21 @@
     2. tömb bejárása `foreach`
     3. string összefűzés
     4. változók kiíratása stringbe
-    5. elem HTML tartalmának felülírása és kiegészítése
+    5. elem HTML tartalmának felülírása és kiegészítése `innerHTML`
+
+4. Kosár kezelés
+    1. `getElementsByClassName()`
+    2. `length`
+    3. `for` ciklus
+    4. érték növelés `i++`
+    5. `console.log()`
+    6. objektum elemre való hivatkozás a tömb szintaxissal `cart[event.target.id]`
+    7. `NaN`
+    8. `undefined`
+    9. `if`, `else`
+    10. egyenlőség vizsgálat `==` 
+    11. objektum bejárása `for` - `in`
+    12. tömb függvények: `find()`
+    13. megjegyzések karbantartása
+    14. üres string
+    

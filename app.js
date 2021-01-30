@@ -56,7 +56,8 @@ const addToCart = (event) => {
   }
 }
 
-const refreshCart = () => {
+const discountMinimumAmount = 30000
+const refreshCartItems = () => {
   // jelenlegi cart-items tartalom kiürítése
   cartItems.innerHTML = ''
   // total 0-ázása
@@ -94,7 +95,7 @@ const cartItems = document.getElementById('cart-items')
 cartIcon.addEventListener('click', function () {
   // jelenítsük meg ami a kosárban van
   cartContent.classList.toggle('active')
-  refreshCart()
+  refreshCartItems()
 })
 
 // tegyük rá a "+" gombokra a click figyelőt a kosárba helyezéssel
@@ -102,5 +103,5 @@ cartIcon.addEventListener('click', function () {
 //cartItems.addEventListener('click', addToCart)
 cartItems.addEventListener('click', (event) => {
   addToCart(event)
-  refreshCart()
+  refreshCartItems()
 })

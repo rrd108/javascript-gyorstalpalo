@@ -2,11 +2,14 @@
 const vegburger = document.getElementById('vegburger')
 const nav = document.getElementById('nav')
 
+console.log(this)
+
 // klikkre css osztályokat cserélünk
 vegburger.addEventListener('click', function () {
   nav.classList.toggle('menu-active')
   vegburger.classList.toggle('fi-align-justify')
   vegburger.classList.toggle('fi-arrow-left')
+  console.log(this)
 })
 
 nav.addEventListener('mouseleave', () => {
@@ -16,12 +19,14 @@ nav.addEventListener('mouseleave', () => {
   console.log(this)
 })
 
+// termékek beillesztése *************************************************
 let products = []
 const productsSection = document.getElementById('products')
 
 fetch('https://hur.webmania.cc/products.json')
   .then(response => response.json())
   .then(data => {
+    console.log(this)
     products = data.products
     products.forEach(product => {
       productsSection.innerHTML += `<div>
@@ -123,6 +128,7 @@ cartIcon.addEventListener('click', function () {
   // jelenítsük meg ami a kosárban van
   cartContent.classList.toggle('active')
   refreshCartItems()
+  console.log(this)
 })
 
 // tegyük rá a "+" gombokra a click figyelőt a kosárba helyezéssel

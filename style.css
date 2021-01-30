@@ -120,6 +120,7 @@ main h1 {
   text-decoration: none;
   font-weight: bold;
   margin-bottom: 1rem;
+  cursor: pointer;
 }
 
 @media (min-width: 640px) {

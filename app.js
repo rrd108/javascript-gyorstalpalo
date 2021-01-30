@@ -31,7 +31,18 @@ fetch('https://hur.webmania.cc/products.json')
         <h3>${product.price} Ft</h3>`
       if (product.stock) {
         productsSection.innerHTML += `<a id="${product.id}" class="addToCart">Kosárba</a>`
-})
+      // gyűjtsük ki az addToCart css class-ú elemeket
+      const addToCartButtons = document.getElementsByClassName('addToCart')
+      // nézzük meg, hogy hány darab van belőle
+      const buttonCount = addToCartButtons.length
+      // lépegessünk végig rajta
+      for (let i = 0; i < buttonCount; i++) {
+        // adjunk hozzájuk egyesével egy click figyelőt
+        addToCartButtons[i].addEventListener('click', addToCart)
+      }
+    })
+  })
+  .catch(error => console.error(error))
 
 // kosár kezelése *************************************************
 const cart = {}
@@ -75,16 +86,7 @@ const refreshCartItems = () => {
   }
   // a végén jelenítsük meg a teljes vásárlási összeget
   cartItems.innerHTML += `<li>Összesen: ${total.toLocaleString()} Ft</li>`
-}
 
-// gyűjtsük ki az addToCart css class-ú elemeket
-const addToCartButtons = document.getElementsByClassName('addToCart')
-// nézzük meg, hogy hány darab van belőle
-const buttonCount = addToCartButtons.length
-// lépegessünk végig rajta
-for (let i = 0; i < buttonCount; i++) {
-  // adjunk hozzájuk egyesével egy click figyelőt
-  addToCartButtons[i].addEventListener('click', addToCart)
 }
 
 const cartIcon = document.getElementById('cart-icon')

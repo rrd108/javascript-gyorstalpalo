@@ -9,11 +9,11 @@ vegburger.addEventListener('click', function () {
   vegburger.classList.toggle('fi-arrow-left')
 })
 
-// termékek beillesztése *************************************************
-// TODO ez általában egy backendről jön
-const products = [
-  {
-    id: 12,
+nav.addEventListener('mouseleave', () => {
+  nav.classList.remove('menu-active')
+  vegburger.classList.remove('fi-arrow-left')
+  vegburger.classList.add('fi-align-justify')
+  console.log(this)
 })
 
 let products = []

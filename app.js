@@ -31,6 +31,11 @@ fetch('https://hur.webmania.cc/products.json')
         <h3>${product.price} Ft</h3>`
       if (product.stock) {
         productsSection.innerHTML += `<a id="${product.id}" class="addToCart">Kosárba</a>`
+      } else {
+        productsSection.innerHTML += 'Nem rendelhető'
+      }
+      productsSection.innerHTML += `</div>`
+
       // gyűjtsük ki az addToCart css class-ú elemeket
       const addToCartButtons = document.getElementsByClassName('addToCart')
       // nézzük meg, hogy hány darab van belőle
@@ -68,11 +73,14 @@ const addToCart = (event) => {
 }
 
 const discountMinimumAmount = 30000
+const discountMinimumPieces = 12
+const discount = 0.1
+
 const refreshCartItems = () => {
   // jelenlegi cart-items tartalom kiürítése
   cartItems.innerHTML = ''
   // total 0-ázása
-  let total = 0
+  let total = 0, maxPieces = 0
   // lépegessünk végig a cart-on és products tömbből keressük ki a szóban forgó terméket
   for (const id in cart) {
     // és jelenítsük meg a nevét, a cartban lévő darabszámot, és a termék árát
@@ -83,8 +91,25 @@ const refreshCartItems = () => {
       </li>`
     // adjuk hozzá ennek az értékét a teljes összeghez
     total += currentProduct.price * cart[id]
+
+    maxPieces = cart[id] > maxPieces ? cart[id] : maxPieces
   }
+
+  // ha van olyan termék amiből több mint 10 van vagy a total > 50000 akkor adjunk 10% kedvezményt
+  /*logikai vizsgálatok
+  egyenlő: ==
+  típusosan egyenlő: ===
+  vagy: ||
+  és: &&
+  nem: ! pl (birthday != today)
+  */
+  // TODO magic numbers
+  if (total > discountMinimumAmount || maxPieces >= discountMinimumPieces) {
+    cartItems.innerHTML += `<li>Kedvezmény: ${(total * discount).toLocaleString()} Ft</li>`
+  }
+
   // a végén jelenítsük meg a teljes vásárlási összeget
+  // TODO az összesenből vonjuk le a kedvezményt ha van
   cartItems.innerHTML += `<li>Összesen: ${total.toLocaleString()} Ft</li>`
 
 }

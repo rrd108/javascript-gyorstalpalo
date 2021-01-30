@@ -14,43 +14,23 @@ vegburger.addEventListener('click', function () {
 const products = [
   {
     id: 12,
-    name: 'Málna',
-    picture: 'malna.jpg',
-    description: 'Kézzel termelt egészség',
-    price: 3800,
-    inStock: true
-  },
-  {
-    id: 2,
-    name: 'Áfonya',
-    picture: 'afonya.jpg',
-    description: 'Kézzel termelt egészség',
-    price: 3250,
-    inStock: true
-  },
-  {
-    id: 37,
-    name: 'Szeder',
-    picture: 'szeder.jpg',
-    description: 'Kézzel termelt egészség',
-    price: 1700,
-    inStock: true,
-    variations: ['fehér', 'fekete']
-  }
-]
+})
 
+let products = []
 const productsSection = document.getElementById('products')
 
-// TODO inStock, variations
-
-products.forEach(product => {
-  productsSection.innerHTML += `<div>
-    <h2>${product.name}</h2>
-    <p>${product.description}</p>
-    <img src="./img/${product.picture}">
-    <h3>${product.price} Ft</h3>
-    <a id="${product.id}" class="addToCart">Kosárba</a>
-  </div>`
+fetch('https://hur.webmania.cc/products.json')
+  .then(response => response.json())
+  .then(data => {
+    products = data.products
+    products.forEach(product => {
+      productsSection.innerHTML += `<div>
+        <h2>${product.name}</h2>
+        <p>${product.description}</p>
+        <img src="${product.picture}">
+        <h3>${product.price} Ft</h3>`
+      if (product.stock) {
+        productsSection.innerHTML += `<a id="${product.id}" class="addToCart">Kosárba</a>`
 })
 
 // kosár kezelése *************************************************

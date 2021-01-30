@@ -3,7 +3,7 @@
 1. Navigációs menü megjelenítése és elrejtése
     1. `const`
     2. `getElementById()`
-    3. Reagálás `click`-re
+    3. reagálás `click`-re
     4. `classList`
     5. `toogle()`
     6. dev-tools
@@ -43,4 +43,30 @@
     12. tömb függvények: `find()`
     13. megjegyzések karbantartása
     14. üres string
+    
+5. Függvények
+    1. általános szintaxis fat arrow függvények esetében
+    2. `console.log()`, `console.warn()`, `console.error()`
+    3. ES6 előtti függvény szintaxis
+    4. paraméterek / argumentumok
+    5. visszatérési értékek `return`
+    6. változók és állandók láthatósága / elérhetősége - block scope
+    7. fat arrow függvények alternatív szintaxisai
+
+6. Függvény használat
+    1. függvény extraction
+    2. callback függvények
+    3. `document.querySelectorAll()`, `document.querySelector()`
+    4. `document.getElementsByTagName()`
+    5. esemény kezelés dinamikusan létrehozott elemek esetén
+    6. logikai igaz értékek
+    7. data attribútomok használata
+    8. ternary operátor
+
+7. Hibakeresés - debugging
+    1. `console.log()`
+    2. Chrome DevTools Debugger
+    3. 
+    
+    
     

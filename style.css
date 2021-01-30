@@ -74,7 +74,7 @@ nav a {
   height: 100%;
   background-color: #7C6A0A;
   color: #fff;
-  width: 60%;
+  min-width: 60%;
   padding: 3.8rem 1rem;
   transform: translateY(-140vh);
   transition: transform 350ms ease-in-out;
@@ -82,6 +82,11 @@ nav a {
 
 #cart-content.active {
   transform: translateY(0);
+}
+
+#cart-items li:last-child {
+  font-weight: bold;
+  font-size: 150%;
 }
 
 main h1 {

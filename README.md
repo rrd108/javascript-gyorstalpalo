@@ -66,7 +66,25 @@
 7. Hibakeresés - debugging
     1. `console.log()`
     2. Chrome DevTools Debugger
-    3. 
+
+8. Adat lekérése a háttérben
+    1. hur.webmania.cc API
+    2. `fetch` - modern AJAX megoldás
+    3. aszinkron hívások és válaszok kezelése
+
+9. Logikai feltételek
+    1. kosárba gomb elrejtése ha a termék nincs raktáron
+    2. összetett logikai feltételek
+    3. logikai feltétel típusok: és, vagy, egyenlő, típusos egyenlő, nem egyenlő
+    4. kedvezmény számítás
+    5. magic numbers
     
-    
+10. Events
+    1. esemény típusok
+    2. `mouseout`
+    3. `classList.remove()`, `classList.add()`
+
+11. Globális változók
+    1. előtag nélküli változó dekraláció
+    2. `this`
     

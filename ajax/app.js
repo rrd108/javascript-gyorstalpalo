@@ -14,6 +14,7 @@ firstnameInput.addEventListener('input', e => {
           results1.innerHTML += `<li>${firstname.name}</li>`
         })
       })
+      .catch(error => console.log(error))
 
     // 2. változat: axios
     axios
@@ -23,5 +24,6 @@ firstnameInput.addEventListener('input', e => {
           results2.innerHTML += `<li>${firstname.name}</li>`
         })
       })
+      .catch(error => console.log(error))
   }
 })

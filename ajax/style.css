@@ -1,0 +1,19 @@
+body, input {
+  font-family: 'Quicksand', sans-serif;
+  background-color: #bdbbb0;
+  color: 353535;
+  font-size: 2rem;
+}
+
+main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+input {
+  border: none;
+  border-bottom: 1px solid #c5a48a;
+  margin-left: 1em;
+}

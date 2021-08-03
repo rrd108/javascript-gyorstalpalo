@@ -1,5 +1,7 @@
 # JavaScript gyorstalpaló
 
+[Videó sorozat](https://www.youtube.com/watch?v=f3tGk_9eUJ0&list=PLbcJ_vPJW9XNGpDU2HhA1UPdQvMXa_M4f)
+
 1. Navigációs menü megjelenítése és elrejtése
     1. `const`
     2. `getElementById()`

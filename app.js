@@ -137,6 +137,8 @@ cartIcon.addEventListener('click', function () {
 // event delegeation
 //cartItems.addEventListener('click', addToCart)
 cartItems.addEventListener('click', (event) => {
-  addToCart(event)
-  refreshCartItems()
+  if (event.target.nodeName == 'BUTTON') {
+    addToCart(event)
+    refreshCartItems()
+  }
 })

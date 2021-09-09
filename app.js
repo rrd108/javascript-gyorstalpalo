@@ -29,17 +29,19 @@ fetch('https://hur.webmania.cc/products.json')
     console.log(this)
     products = data.products
     products.forEach(product => {
-      productsSection.innerHTML += `<div>
+      let content = productsSection.innerHTML
+      content += `<div>
         <h2>${product.name}</h2>
         <p>${product.description}</p>
         <img src="${product.picture}">
         <h3>${product.price} Ft</h3>`
       if (product.stock) {
-        productsSection.innerHTML += `<a id="${product.id}" class="addToCart">Kosárba</a>`
+        content += `<a id="${product.id}" class="addToCart">Kosárba</a>`
       } else {
-        productsSection.innerHTML += 'Nem rendelhető'
+        content += 'Nem rendelhető'
       }
-      productsSection.innerHTML += `</div>`
+      content += '</div>'
+      productsSection.innerHTML = content
 
       // gyűjtsük ki az addToCart css class-ú elemeket
       const addToCartButtons = document.getElementsByClassName('addToCart')

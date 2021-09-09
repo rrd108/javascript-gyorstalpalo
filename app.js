@@ -102,7 +102,7 @@ const refreshCartItems = () => {
     maxPieces = cart[id] > maxPieces ? cart[id] : maxPieces
   }
 
-  // ha van olyan termék amiből több mint 10 van vagy a total > 50000 akkor adjunk 10% kedvezményt
+  // ha van olyan termék amiből több mint 12 van vagy a total > 30.000 akkor adjunk 10% kedvezményt
   /*logikai vizsgálatok
   egyenlő: ==
   típusosan egyenlő: ===

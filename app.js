@@ -1,144 +1,84 @@
-// oldalsó menü kezelése *************************************************
-const vegburger = document.getElementById('vegburger')
-const nav = document.getElementById('nav')
+const searchForm = document.getElementById('searchForm')
+const search = document.getElementById('search')
+const results = document.getElementById('results')
+const loader = document.getElementById('loader')
+const likesCount = document.getElementById('likesCount')
 
-console.log(this)
+const likes = JSON.parse(localStorage.getItem('likes')) || []
+likesCount.innerText = likes.length
 
-// klikkre css osztályokat cserélünk
-vegburger.addEventListener('click', function () {
-  nav.classList.toggle('menu-active')
-  vegburger.classList.toggle('fi-align-justify')
-  vegburger.classList.toggle('fi-arrow-left')
-  console.log(this)
+search.focus()
+
+// localStorage.removeItem('likes')
+// sessionStorage.clear()
+
+searchForm.addEventListener('submit', e => {
+  e.preventDefault()
+
+  const searches = JSON.parse(sessionStorage.getItem('searches')) || []
+  const results = searches.find(s => s.searcTerm == search.value)
+
+  loader.style.display = 'block'
+
+  if (results) {
+    renderResults(results.data)
+  }
+
+  if (!results) {
+    fetch(`https://vegavarazs.hu/wp-json/wp/v2/search?search=${search.value}`)
+      .then(res => res.json())
+      .then(data => {
+        searches.push({ searcTerm: search.value, data })
+        sessionStorage.setItem('searches', JSON.stringify(searches))
+        renderResults(data)
+      })
+  }
 })
 
-nav.addEventListener('mouseleave', () => {
-  nav.classList.remove('menu-active')
-  vegburger.classList.remove('fi-arrow-left')
-  vegburger.classList.add('fi-align-justify')
-  console.log(this)
-})
+const renderResults = data => {
+  results.innerHTML = ''
+  data.forEach(item => {
+    fetch(`https://vegavarazs.hu/wp-json/wp/v2/posts/${item.id}`)
+      .then(res => res.json())
+      .then(data => {
+        if (data.id) {
+          // get the image from data.content.rendered
+          const imgUrl = data.content.rendered.match(/<img.*?src="(.*?)"/)[1]
 
-// termékek beillesztése *************************************************
-let products = []
-const productsSection = document.getElementById('products')
+          const isLiked = likes.includes(data.id.toString())
 
-fetch('https://hur.webmania.cc/products.json')
-  .then(response => response.json())
-  .then(data => {
-    console.log(this)
-    products = data.products
-    products.forEach(product => {
-      let content = productsSection.innerHTML
-      content += `<div>
-        <h2>${product.name}</h2>
-        <p>${product.description}</p>
-        <img src="${product.picture}">
-        <h3>${product.price} Ft</h3>`
-      if (product.stock) {
-        content += `<a id="${product.id}" class="addToCart">Kosárba</a>`
-      } else {
-        content += 'Nem rendelhető'
-      }
-      content += '</div>'
-      productsSection.innerHTML = content
-
-      // gyűjtsük ki az addToCart css class-ú elemeket
-      const addToCartButtons = document.getElementsByClassName('addToCart')
-      // nézzük meg, hogy hány darab van belőle
-      const buttonCount = addToCartButtons.length
-      // lépegessünk végig rajta
-      for (let i = 0; i < buttonCount; i++) {
-        // adjunk hozzájuk egyesével egy click figyelőt
-        addToCartButtons[i].addEventListener('click', addToCart)
-      }
-    })
+          results.innerHTML += `
+            <li>
+              <h2>${item.title}</h2>
+              <div class="recipe">
+                <img src="${imgUrl}">
+                ${data.excerpt.rendered.substring(0, 150)}...
+              </div>
+              <div class="actions">
+                <a href="${data.link}" class="link">↬</a>
+                <a href="#" data-id="${data.id}" class=" like ${
+            isLiked ? 'liked' : ''
+          }">♥</a>
+              </div>
+            </li>
+          `
+        }
+      })
   })
-  .catch(error => console.error(error))
-
-// kosár kezelése *************************************************
-const cart = {}
-
-const addToCart = (event) => {
-  // nézzük meg, hogy a kosárba gombot nyomtuk meg (van id), vagy a plusz gombot (nincs id)
-
-  /*let target = event.target.dataset.id
-  if (event.target.id) {
-    target = event.target.id
-  }*/
-
-  // ternary operator
-  let target = event.target.id ? event.target.id : event.target.dataset.id
-
-  // ha még nincs benne a kosárban akkor adjuk hozzá 1 darabbal
-  if (cart[target] == undefined) {
-    cart[target] = 1
-  } else {
-    // ha már benne van akkor növeljük a darab számot
-    cart[target]++
-  }
+  loader.style.display = 'none'
 }
 
-const discountMinimumAmount = 30000
-const discountMinimumPieces = 12
-const discount = 0.1
+results.addEventListener('click', e => {
+  e.preventDefault()
+  if (e.path[0].dataset.id) {
+    const heart = e.path[0]
+    heart.classList.add('liked')
+    likes.push(e.path[0].dataset.id)
 
-const refreshCartItems = () => {
-  // jelenlegi cart-items tartalom kiürítése
-  cartItems.innerHTML = ''
-  // total 0-ázása
-  let total = 0, maxPieces = 0
-  // lépegessünk végig a cart-on és products tömbből keressük ki a szóban forgó terméket
-  for (const id in cart) {
-    // és jelenítsük meg a nevét, a cartban lévő darabszámot, és a termék árát
-    const currentProduct = products.find(product => product.id == id)
-    cartItems.innerHTML += `<li>
-      <button data-id="${currentProduct.id}">+</button>
-      ${cart[id]} db - ${currentProduct.name} * ${currentProduct.price} Ft/db
-      </li>`
-    // adjuk hozzá ennek az értékét a teljes összeghez
-    total += currentProduct.price * cart[id]
-
-    maxPieces = cart[id] > maxPieces ? cart[id] : maxPieces
-  }
-
-  // ha van olyan termék amiből több mint 12 van vagy a total > 30.000 akkor adjunk 10% kedvezményt
-  /*logikai vizsgálatok
-  egyenlő: ==
-  típusosan egyenlő: ===
-  vagy: ||
-  és: &&
-  nem: ! pl (birthday != today)
-  */
-  // TODO magic numbers
-  if (total > discountMinimumAmount || maxPieces >= discountMinimumPieces) {
-    cartItems.innerHTML += `<li>Kedvezmény: ${(total * discount).toLocaleString()} Ft</li>`
-  }
-
-  // a végén jelenítsük meg a teljes vásárlási összeget
-  // TODO az összesenből vonjuk le a kedvezményt ha van
-  cartItems.innerHTML += `<li>Összesen: ${total.toLocaleString()} Ft</li>`
-
-}
-
-const cartIcon = document.getElementById('cart-icon')
-const cartContent = document.getElementById('cart-content')
-const cartItems = document.getElementById('cart-items')
-
-// tegyünk rá egy click figyelőt a kosár iconra
-cartIcon.addEventListener('click', function () {
-  // jelenítsük meg ami a kosárban van
-  cartContent.classList.toggle('active')
-  refreshCartItems()
-  console.log(this)
-})
-
-// tegyük rá a "+" gombokra a click figyelőt a kosárba helyezéssel
-// event delegeation
-//cartItems.addEventListener('click', addToCart)
-cartItems.addEventListener('click', (event) => {
-  if (event.target.nodeName == 'BUTTON') {
-    addToCart(event)
-    refreshCartItems()
+    // TODO duplikációk kiszűrése
+    localStorage.setItem('likes', JSON.stringify(likes))
+    likesCount.innerText = likes.length
+    likesCount.classList.add('pop')
+    setTimeout(() => likesCount.classList.remove('pop'), 500)
   }
 })
